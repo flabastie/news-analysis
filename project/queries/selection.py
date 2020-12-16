@@ -89,9 +89,6 @@ class SelectionAnalytics():
         res = self.client.search(index=self.index_name, body= {
                 "size": query_size,
                 "query": {
-                    # "match": {
-                    #     "section": section_name
-                    # }
                     "bool" : {
                         "must" : {
                             "term" : { "section" : section_name }

@@ -90,9 +90,9 @@ def topics():
         if (req and params['sel_model']=='LDA') :
             selection_obj = SelectionAnalytics()
             # custom corpus
-            corpus = selection_obj.get_custom_corpus(params["sel_section"], params["sel_docs"])
+            corpus = selection_obj.get_custom_corpus_list(params["sel_section"], params["sel_docs"])
             # model obj
-            model_obj = TopicsModelingLDA(params["sel_twords"], params["sel_topics"], corpus[0])
+            model_obj = TopicsModelingLDA(params["sel_twords"], params["sel_topics"], corpus)
             # data fit
             data_fitted = model_obj.fit_data()
             # get topics

@@ -26,7 +26,7 @@ class TopicsModelingLDA():
                 # number of topics
                 self.n_topics = n_topics
                 # vectorizer
-                self.tf_vectorizer = CountVectorizer(max_df=0.95, min_df=2, max_features=500)
+                self.tf_vectorizer = CountVectorizer(max_features=1000, tokenizer=lambda x: x, preprocessor=lambda x: x)
                 self.tf = self.tf_vectorizer.fit_transform(corpus)
                 # create LDA model
                 self.lda = LatentDirichletAllocation(
