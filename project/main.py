@@ -100,7 +100,6 @@ def topics():
             # set session variable topics_params
             session['topics_params'] = params
             return jsonify({'topics': topics})
-
         elif (req and params['sel_model']=='NMF') :
             selection_obj = SelectionAnalytics()
             # custom corpus
@@ -114,7 +113,6 @@ def topics():
             # set session variable topics_params
             session['topics_params'] = params
             return jsonify({'topics': topics})
-
         else:
             return jsonify({'topics': None})
 
