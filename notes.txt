@@ -1,0 +1,7 @@
+cd /Users/francois/development/projects/00_news-analysis/lemondecovid
+conda activate covidenv
+
+export FLASK_APP=project/__init__
+export FLASK_DEBUG=1
+flask run
+

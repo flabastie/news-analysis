@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+{% block title %}Topics modeling{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <main role="main" class="container">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
+      <h1 class="h2">Topic Modeling</h1><span>Recherche de topics dans un corpus</span>
+    </div>
+
+    <!-- jumbotron -->
+    <div class="jumbotron">
+      <!--<form action="/modeling/selection" method="post">-->
+      <form>
+        <div class="form-group news-params">
+          <div class="row">
+            <h5 class="col-md-3" for="sel_section">Section</h5>
+            <select class="form-control col-md-4" id="sel_section" name="sel_section">
+              {% for item in sections %}
+                  <option value="{{item['key']}}" {% if item['key']==random_key %} selected="selected"{% endif %} >{{item['key']}} &#183; {{item['doc_count']}} docs</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="row">
+            <h5 class="col-md-3">Model</h5>
+              <select class="form-control col-md-4" id="sel_model" name="sel_model">
+                <option value="LDA">LDA (Latent Dirichlet Allocation)</option>
+                <option value="NMF">NMF (Negative Matrix Factorisation)</option>
+              </select>
+          </div>
+          <div class="row">
+            <h5 class="col-md-3">Nb. Top words</h5>
+            <div class="form-group slidecontainer col-sm-6">
+              <span id="value_twords" class="show_value"></span>
+              <input type="range" name="sel_twords" min="1" max="8" step="1" value="5" class="slider" id="range_twords">
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col-md-3">Nb. Topics</h5>
+            <div class="form-group slidecontainer col-sm-6">
+              <span id="value_topics" class="show_value"></span>
+              <input type="range" name="sel_topics" min="1" max="8" step="1" value="5" class="slider" id="range_topics">
+            </div>
+          </div>
+          <div class="row">
+            <h5 class="col-md-3">Nb. Documents</h5>
+            <div class="form-group slidecontainer col-sm-6">
+              <span id="value_docs" class="show_value"></span>
+              <input type="range" name="sel_docs" min="10" max="9990" step="1" value="20" class="slider" id="range_docs">
+            </div>
+          </div>
+          <!-- Button -->
+          <div class="row d-flex justify-content-between">
+            <div class="col-sm-3">
+              <button id="btn_topics" type="submit" class="btn btn-primary modeling">Envoyer</button>
+            </div>
+            <div id="loading-infos" class="col-sm-6">
+              <div class="spinner-border text-primary" role="status"></div>
+              <div class="loading-message">Merci de patienter ...</div>
+            </div>
+            <div class="col-sm ml-auto">
+              <button id="btn_reset_params" type="button" class="btn btn-outline-secondary btn-sm float-right">Reset</button>
+            </div>
+          </div>
+        </div>
+        <!-- end of form-group -->
+      </form>
+    </div>
+    <!-- end of jumbotron -->
+    
+    <!-- Topics -->
+    <!-- <section class="topics" id="topics"> -->
+      <section id="topics_display" class="topics_hide topics" id="{{topics_show}}">
+          <h6 id="rappel_params" class="rappel_params"></h6>
+          
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Top words</th>
+                </tr>
+              </thead>
+              <tbody id="words_selection">
+                  <tr>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
+          <h1 class="h2">Words Selection</h1><span>Recherche de documents par mots-clés</span>
+        </div>
+
+        <!-- jumbotron -->
+        <div class="jumbotron">
+          <div class="row d-flex justify-content-start">
+            <div class="col-md-3">
+              <h5>Selected words</h5>
+            </div>
+            <div class="col-md-6">
+              <div id="words_selected">Cliquer sur les top-words à sélectionner.</div>
+            </div>
+          </div>
+          <!-- Button -->
+          <div class="row d-flex justify-content-between">
+            <div class="col-md-3">
+              <button id="btn_search" class="btn btn-primary">Rechercher</button>
+            </div>
+            <div class="col-sm-6">
+              <div id="result_message">&nbsp;</div>
+            </div>
+            <div class="col-sm ml-auto">
+              <button id ="reset_words_select" type="button" class="btn btn-outline-secondary btn-sm float-right">Reset</button>
+            </div>
+          </div>
+        </div>
+        <!-- end of jumbotron -->
+
+    </section>
+    <!-- end of Topics -->
+  </main>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('main.home') }}">
+  <h1 class="title">
+  Le Monde Covid
+  </h1>
+</a>
+<br>
+<h2 class="subtitle">
+  Topic Modeling | Latent Dirichlet Allocation
+</h2>
+{% endblock %}

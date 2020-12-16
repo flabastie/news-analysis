@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Le Monde Covid</h1>
+      <p>Analyses d'articles traitant du Covid-19 dans l'édition en ligne du journal Le Monde</p>
+      <p><a class="btn btn-primary" href="{{ url_for('main.modeling') }}" role="button">Topic Modeling</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Topic modeling</h2>
+        <p>En NLP - traitement automatique du langage naturel -, un topic model (ou modèle thématique) est un modèle probabiliste permettant de déterminer des sujets ou thèmes abstraits dans un document textuel.</p>
+      </div>
+      <div class="col-md-4">
+        <h2>Analyse</h2>
+        <p>Latent Dirichlet Allocation (LDA) & Negative Matrix Factorisation (NMF) sont des algorithmes d'intelligence artificielle qui rendent possible la modélisation automatique de sujet en retournant des séries de topics et mots-clés.</p>
+      </div>
+      <div class="col-md-4">
+        <h2>Corpus</h2>
+        <p>A partir d’une sélection de plus de 10500 articles du journal Le Monde, notre étude propose d’analyser de manière automatique des documents relatifs au "Covid", en extrayant les modèles de sujets possibles.</p>
+      </div>
+    </div>
+    <hr>
+  </div> <!-- /container -->
+
+{% endblock %}

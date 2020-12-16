@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}LDA{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <main role="main" class="container">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
+      <h1 class="h2 col-sm-2 p-2">Exploration</h1>
+      <a class="p-2" href="{{ url_for('main.modeling') }}">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-bar-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>
+        </svg>
+      </a>
+      <span class="ml-auto p-2">Documents relatifs</span>
+    </div>
+
+    <!-- jumbotron -->
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-9">
+          <h5>{{data}}</h5>
+        </div>
+      </div>
+    </div>
+    <!-- end of jumbotron -->
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm table-exploration">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>{{wanted}} Documents in {{hits}} hits</th>
+              <th>Section</th>
+              <th class="exploration-date">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for item in docs %}
+              <tr>
+                <td>{{loop.index}}</td>
+                <td>
+                    <a href="/document/{{item['_id']}}">{{item['_source']['title']}}</a>
+                </td>
+                <td>{{item['_source']['section']}}</td>
+                <td> {{(item['_source']['date'])[:-9]}}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+    
+  </main>
+</div>
+
+{% endblock %}
