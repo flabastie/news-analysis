@@ -73,8 +73,14 @@ class SelectionAnalytics():
         elements_docs = res['aggregations']['Articles']['GroupBy']['buckets']
         # sorting by doc_count desc
         elements_list  = [item for item in sorted(elements_docs, key = lambda i: i['doc_count'], reverse=True)]
+        # remove empty sections (bug to fix)
+        sections_to_exclude = ['les-decodeurs', 'm-le-mag', 'm-perso', 'm-styles', 'series-d-ete']
+        for item in elements_list[:18]:
+            print(item)
+            if (item['key'] in sections_to_exclude):
+                elements_list.remove(item)
         # list of dics (doc_count & key)
-        return elements_list[:20]
+        return elements_list[:18]
     
     def get_custom_corpus(self, section_name, query_size):
         '''
