@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import io
 from io import BytesIO  
-from io import StringIO
+# from io import StringIO
 import base64
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.backends.backend_svg import FigureCanvasSVG
@@ -24,7 +24,6 @@ from project.processing.modeling import TopicsModelingLDA
 from project.processing.modeling import TopicsModelingNMF
 from project.queries.selection import SelectionAnalytics
 import flask_monitoringdashboard as dashboard
-
 from project import config
 
 main = Blueprint('main', __name__)
@@ -118,8 +117,6 @@ def topics():
 
         else:
             return jsonify({'topics': None})
-
-
 
 @main.route("/search", methods=['POST'])
 @login_required
@@ -279,45 +276,3 @@ def barplot(id):
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
-
-# @main.route("/modeling/selection", methods=['POST'])
-# @login_required
-# def selection():
-#     '''
-#         Corpus creation & topic modeling
-#         :param url: url
-#         :type ur: str
-#         :return: sections, topics, sel_section, sel_model, sel_twords, sel_topics, sel_docs, 
-#         :rtype: list, list, str, str, str, str, str
-#         :return: render_template('modeling.html')
-#         :rtype: html page
-#     '''
-#     selection_obj = SelectionAnalytics()
-#     sections_list = selection_obj.get_elements_list("section")
-#     # Get from the POST body
-#     if request.method == "POST":
-#         req = request.form.to_dict()
-#         # data selection
-#         sel_twords = int(req['sel_twords'])
-#         sel_model = req['sel_model']
-#         sel_section = req['sel_section']
-#         sel_topics = int(req['sel_topics'])
-#         sel_docs = int(req['sel_docs'])
-#         # create corpus & fit_data to get topics
-#         corpus = selection_obj.get_custom_corpus(sel_section, sel_docs)
-#         model_obj = TopicsModelingLDA(sel_twords, sel_topics, corpus[0])
-#         data_fitted = model_obj.fit_data()
-#         topics = model_obj.get_topics()
-#         # return template
-#         return render_template("modeling.html", 
-#             sections=sections_list, 
-#             # corpus=corpus[0], 
-#             topics=topics,
-#             sel_section=sel_section, 
-#             sel_model=sel_model,
-#             sel_twords=sel_twords,
-#             sel_topics=sel_topics,
-#             sel_docs=sel_docs
-#             )
-#     else:
-#         return render_template("modeling.html", sections=sections_list, corpus=[], topics=None )

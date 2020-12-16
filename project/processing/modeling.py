@@ -87,7 +87,7 @@ class TopicsModelingNMF():
                 # number of topics
                 self.n_topics = n_topics
                 # vectorizer
-                self.tfidf_vectorizer = TfidfVectorizer(analyzer='word', tokenizer=self.dummy_fun, preprocessor=self.dummy_fun, token_pattern=None)  
+                self.tfidf_vectorizer = TfidfVectorizer(analyzer='word', tokenizer=lambda x: x, preprocessor=lambda x: x, token_pattern=None)  
                 self.tfidf = self.tfidf_vectorizer.fit_transform(corpus)
                 # create NMF model
                 self.nmf = NMF(n_components=n_topics, 
@@ -95,9 +95,6 @@ class TopicsModelingNMF():
                                 alpha=.1, 
                                 l1_ratio=.5, 
                                 init='nndsvd')
-
-        def dummy_fun(self, doc):
-                return doc
 
         def fit_data(self):
                 '''
