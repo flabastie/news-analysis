@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import io
 from io import BytesIO  
-# from io import StringIO
 import base64
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.backends.backend_svg import FigureCanvasSVG
@@ -131,7 +130,6 @@ def search():
     if request.method == "POST":
         req = request.form.to_dict()
         words = req['w']
-        print(words)
         if req and len(words) > 0:
             # set session variable tokens_search
             session['tokens_search'] = words.split(",")
