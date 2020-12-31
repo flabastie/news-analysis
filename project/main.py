@@ -27,17 +27,16 @@ from project import config
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
-def index():
-    '''
-        Page 'Cover'
-        :param: None
-        :return: render_template('index.html')
-    '''
-    return render_template('index.html')
+# @main.route('/')
+# def index():
+#     '''
+#         Page 'Cover'
+#         :param: None
+#         :return: render_template('index.html')
+#     '''
+#     return render_template('index.html')
 
-@main.route('/home')
-@login_required
+@main.route('/')
 def home():
     '''
         Page 'Home'
@@ -46,10 +45,15 @@ def home():
         :return: render_template('home.html')
         :rtype: html page
     '''
-    return render_template('home.html')
+    # get sections scores
+    selection_obj = SelectionAnalytics()
+    # data for piechart
+    sections_scores = selection_obj.count_by_sections()
+    # data for linegraph
+    dates_scores = selection_obj.count_by_dates()
+    return render_template('home.html', sections_scores=sections_scores, dates_scores=dates_scores)
 
 @main.route('/modeling')
-@login_required
 def modeling():
     '''
         Page 'Modeling'
@@ -68,7 +72,6 @@ def modeling():
     return render_template("modeling.html", sections=sections_list, random_key=random_item_key)
 
 @main.route("/topics", methods=['POST'])
-@login_required
 def topics():
     '''
         Corpus creation & making topic modeling
@@ -116,7 +119,6 @@ def topics():
             return jsonify({'topics': None})
 
 @main.route("/search", methods=['POST'])
-@login_required
 def search():
     '''
         Get words selected,
@@ -138,7 +140,6 @@ def search():
             return jsonify({'result': 0})
 
 @main.route("/exploration")
-@login_required
 def exploration():
     '''
         Get tokens_search from session
@@ -165,7 +166,6 @@ def exploration():
         return "null"
 
 @main.route('/document/<string:id>', methods=['GET'])
-@login_required
 def document(id):
     '''
         Get doc id
@@ -185,7 +185,6 @@ def document(id):
         return "ERROR"
 
 @main.route('/statistics/<string:id>', methods=['GET'])
-@login_required
 def statistics(id):
     '''
         Get doc id
@@ -207,7 +206,6 @@ def statistics(id):
         return "ERROR"
 
 @main.route('/wordcloud/<string:id>', methods=['GET'])
-@login_required
 def wordcloud_png(id):
     '''
         Get doc id
@@ -232,7 +230,6 @@ def wordcloud_png(id):
     return Response(img, mimetype='image/png')
 
 @main.route('/barplot/<string:id>', methods=['GET'])
-@login_required
 def barplot(id):
     '''
         Get doc id
@@ -272,3 +269,13 @@ def barplot(id):
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+
+@main.route('/infos')
+def infos():
+    # get sections scores
+    selection_obj = SelectionAnalytics()
+    # data for piechart
+    sections_scores = selection_obj.count_by_sections()
+    # data for linegraph
+    dates_scores = selection_obj.count_by_dates()
+    return render_template('infos.html', sections_scores=sections_scores, dates_scores=dates_scores)

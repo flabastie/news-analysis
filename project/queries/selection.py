@@ -76,7 +76,7 @@ class SelectionAnalytics():
         # remove empty sections (bug to fix)
         sections_to_exclude = ['les-decodeurs', 'm-le-mag', 'm-perso', 'm-styles', 'series-d-ete']
         for item in elements_list[:18]:
-            print(item)
+            # print(item)
             if (item['key'] in sections_to_exclude):
                 elements_list.remove(item)
         # list of dics (doc_count & key)
@@ -188,6 +188,129 @@ class SelectionAnalytics():
         results_list = []
         results_list = [item["_source"]['doc_token'] for item in res['hits']['hits']]
         return (results_list)
+
+    def count_by_sections(self):
+        '''
+            count docs by sections
+            :return: sections_list
+            :rtype: list of dicts
+        '''
+        res = self.client.search(index='news_analysis', body={
+                # "size": 9999,
+                "aggs": {
+                    "sections": {
+                    "terms": { "field": "section.keyword" } 
+                    }
+                },
+                "_source": {
+                    "include": ["_id", "date", "section"]
+                },
+            }
+        )
+        result = res['aggregations']['sections']
+        buckets = result['buckets'][:9]
+        sections_list = []
+        # get total docs 
+        total_docs = 0
+        for item in buckets:
+            total_docs += item['doc_count']
+        # get percent
+        for item in buckets:
+            doc_percent = round(item['doc_count']/total_docs*100)
+            sections_list.append({'score':item['doc_count'], 'percent':doc_percent, 'section':item['key']})
+
+        # Rename sections
+        sections_names = {
+            'international': 'International',
+            'economie':'Economie',
+            'planete': 'Planète',
+            'idees':'Idées',
+            'afrique':'Afrique',
+            'politique':'Politique',
+            'societe': 'Societe',
+            'culture':'Culture',
+            'sport':'Sport'
+        }
+        for item in sections_list:
+            if item['section'] in sections_names:
+                item['section']= sections_names[item['section']]
+
+        return(sections_list)
+
+    def count_by_dates(self):
+        res = self.client.search(index='news_analysis', body={
+            "aggs": {
+                "amount_per_week": {
+                "date_histogram": {
+                    "field": "date",
+                    "interval": "week",
+                    "format" : "yyyy-MM-dd"
+                },
+                # "aggs": {
+                #     "total_amount": {
+                #     "sum": {
+                #         "field": "date"
+                #     }
+                #     }
+                # },
+                "aggs": {
+                    "sections": {
+                        "terms": { "field": "section.keyword" } 
+                    }
+                },
+                }
+            },
+            }
+        )
+        res_list = res['aggregations']['amount_per_week']['buckets']
+
+        # dict for sections selection & renaming
+        sections_names = {
+            'international': 'International',
+            'economie':'Economie',
+            'planete': 'Planète',
+            'idees':'Idées',
+            'afrique':'Afrique',
+            'politique':'Politique',
+            'societe': 'Société',
+            'culture':'Culture',
+            'sport':'Sport'
+        }
+
+        # build data list
+        data = []
+        for item in res_list:
+            nb_docs = item['doc_count']
+            # filter year 2020
+            year = item['key_as_string'][0:4]
+            if (year != '2019'):
+                # get & subtring date
+                date = item['key_as_string'][0:10]
+                buckets = item['sections']['buckets']
+                sections_scores = []
+                # select sections and rename
+                for i in buckets:
+                    if i['key'] in sections_names:
+                        sections_scores.append({'section':sections_names[i['key']], 'score':i['doc_count']})
+
+                # set empty sections to zero
+                listed_sections = [element['section'] for element in sections_scores]
+                for name in sections_names.values():
+                    if name not in listed_sections:
+                        sections_scores.append({'section':name, 'score':0})
+
+                # data list to return
+                data.append({'date':date, 'nb_docs':nb_docs, 'sections_scores':sections_scores})
+
+        # reformat data
+        data_list = []
+        for item in data:
+            item_dict = {'date': item['date'].replace('-', '')}
+            for element in item['sections_scores']:
+                item_dict[element['section']] = element['score']
+            data_list.append(item_dict)
+        
+        return data_list
 
 class SelectionRelational():
     '''
