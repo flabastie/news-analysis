@@ -37,15 +37,21 @@
         <p>Latent Dirichlet Allocation (LDA) & Negative Matrix Factorisation (NMF) sont des algorithmes d'intelligence artificielle qui rendent possible la modélisation automatique de sujet en retournant des séries de topics et mots-clés.</p>
       </div>
       <div class="col-md-4">
-        <h2>Corpus</h2>
-        <p>A partir d’une sélection de plus de 10500 articles du journal Le Monde, notre étude propose d’analyser de manière automatique des documents relatifs au "Covid", en extrayant les modèles de sujets possibles.</p>
+        <h2>Projet</h2>
+        <p>Cette application analyse un corpus de plus de 10500 articles du journal Le Monde - relatifs au "Covid" et publiés en 2020 - en extrayant des modèles thématiques, puis en proposant une recherche par mots-clés.</p>
       </div>
     </div>
     <hr>
+    <!-- piechart -->
+    <div>
+      <h5>Publications par sections</h5>
+      <div id="pie-chart"></div>
+    </div>
 
   </div> <!-- /container -->
   
       <!-- Include our script that will make our bar chart. -->
       <script type="text/javascript" src="{{ url_for('static', filename='js/chart.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/pie_chart.js') }}"></script>
 
 {% endblock %}
