@@ -7,7 +7,7 @@
   <main role="main" class="container document">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
       <h1 class="h2 col-sm-2 p-2">Document</h1>
-      <a class="p-2" href="{{url_for('main.exploration')}}">
+      <a class="p-2" href="/statistics/{{id}}">
         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-bar-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>
         </svg>
@@ -17,7 +17,7 @@
 
     <!-- jumbotron -->
     <div class="jumbotron">
-      <div class="row d-flex justify-content-between">
+      <div class="row d-flex justify-content-start">
         <div class="col-md-9">
           <h5>{{data['title']}}</h5>
           <p>{{data['teaser']}}</p>
@@ -25,7 +25,7 @@
         <a class="p-2" href="/statistics/{{id}}">
         <!-- <a class="p-2" href="/plot.png"> -->
         <!-- <a class="p-2" href="/test"> -->
-          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <svg width="4em" height="4em" viewBox="0 0 16 16" class="bi bi-bar-chart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
           </svg>
         </a>

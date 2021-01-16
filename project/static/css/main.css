@@ -252,12 +252,34 @@ table.table-exploration .exploration-date{
     stroke-width: 2px;
     fill: none;
   }
+
+  /* -------------------
+      statistics
+-------------------- */
+
+.stats-h5{
+    margin-top: 40px;
+    margin-bottom:10px;
+}
+
+.bar { 
+    fill: steelblue; 
+}
+
+.wordcloud_img{
+    padding: 20px 0 50px 50px;
+}
+
   
 /* -------------------
       mediaqueries
 -------------------- */
 
 @media only screen and (max-width: 990px) {
+
+    #home-line-chart{
+        display: none;
+    }
 
     div.jumbotron .news-params .col-sm-6{
         -ms-flex: 0 0 100%!important;

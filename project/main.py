@@ -24,6 +24,7 @@ from project.processing.modeling import TopicsModelingNMF
 from project.queries.selection import SelectionAnalytics
 import flask_monitoringdashboard as dashboard
 from project import config
+from operator import itemgetter
 
 main = Blueprint('main', __name__)
 
@@ -200,8 +201,18 @@ def statistics(id):
         # get document by id
         selection_obj = SelectionAnalytics()
         res = selection_obj.get_document_by_id(id)
-        # return statistics.html
-        return render_template("statistics.html", data=res['_source'], id=id)
+        # data for barplot
+        tokens_list = res['_source']['doc_token']
+        # data
+        counter = Counter()
+        counter.update(tokens_list)
+        most_common = counter.most_common(25)
+        df = pd.DataFrame(most_common, columns=['token', 'score'])
+        scores = df['score']
+        words = df['token']
+        scores_list = df.to_dict('records')
+        scores_list = sorted(scores_list, key=itemgetter('score')) 
+        return render_template("statistics.html", data=res['_source'], id=id, scores_list=scores_list)
     else:
         return "ERROR"
 

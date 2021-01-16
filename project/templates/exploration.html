@@ -40,7 +40,7 @@
               <tr>
                 <td>{{loop.index}}</td>
                 <td>
-                    <a href="/document/{{item['_id']}}">{{item['_source']['title']}}</a>
+                    <a href="/statistics/{{item['_id']}}">{{item['_source']['title'] | truncate(80)}}</a>
                 </td>
                 <td>{{item['_source']['section']}}</td>
                 <td> {{(item['_source']['date'])[:-9]}}</td>
