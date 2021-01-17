@@ -178,8 +178,8 @@ ul.no-bullets {
 
 .wordcloud_img{
     display: inline-block;
-    min-width: 600px;
-    min-height: 400px;
+    max-width: 600px;
+    max-height: 400px;
     height: fit-content(100%);
     width: fit-content(100%);
 }
@@ -342,6 +342,15 @@ div.jumbotron.custom-header{
 
     div.jumbotron.custom-header-home h1{
         font-size: 2rem;
+    }
+
+    .nav-icon{
+        max-width: 1rem;
+        height: 1rem;
+    }
+
+    .wordcloud_img{
+        padding: 20px 0 0 0;
     }
 
   }
