@@ -46,13 +46,6 @@ var color = d3.scale.ordinal()
 	.domain(sections_list)
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00", "#cccfff", "#ccc000"]);
 
-// function randomData (){
-// 	var labels = sections_list;
-// 	return labels.map(function(label){
-// 		return { label: label, value: Math.random() }
-// 	});
-// }
-
 function randomData (){
 	return data_sections.map(function(item){
 		return { label: item.section + ' ' + item.percent + '%', value: item.percent }
@@ -60,12 +53,6 @@ function randomData (){
 }
 
 change(randomData());
-
-// d3.select(".randomize")
-// 	.on("click", function(){
-// 		change(randomData());
-// 	});
-
 
 function change(data) {
 
@@ -166,23 +153,27 @@ function drawChart() {
 
 	width = currentWidth;
 	if(currentWidth < 990){
-		height = currentWidth/2;
+		height = currentWidth;
+		radius = Math.min(width, height) / 2;
+		arc = d3.svg.arc()
+			.outerRadius(radius * 0.8)
+			.innerRadius(radius * 0.4);
+		outerArc = d3.svg.arc()
+			.innerRadius(radius * 0.9)
+			.outerRadius(radius * 0.9);
+		svg.attr("transform", "translate(" + width/2 + "," + height/2 + ")");
 	} else {
 		height = 550;
+		radius = Math.min(width, height) / 2;
+		arc = d3.svg.arc()
+			.outerRadius(radius * 0.8)
+			.innerRadius(radius * 0.4);
+		outerArc = d3.svg.arc()
+			.innerRadius(radius * 0.9)
+			.outerRadius(radius * 0.9);
+		svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 	}
-	// height = 550;
-    
-	radius = Math.min(width, height) / 2;
-  
-	arc = d3.svg.arc()
-		.outerRadius(radius * 0.8)
-		.innerRadius(radius * 0.4);
 
-	outerArc = d3.svg.arc()
-		.innerRadius(radius * 0.9)
-		.outerRadius(radius * 0.9);
-
-	svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 }
 
 drawChart()
