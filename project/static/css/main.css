@@ -231,7 +231,7 @@ table.table-exploration .exploration-date{
 
   #pie-chart {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    width: 960px;
+    max-width: 960px;
     height: 600px;
     position: relative;
     font: 0.8rem sans-serif;
@@ -338,6 +338,10 @@ div.jumbotron.custom-header{
 
     div.jumbotron > form > div > div:nth-child(2){
         margin-bottom: 40px;
+    }
+
+    div.jumbotron.custom-header-home h1{
+        font-size: 2rem;
     }
 
   }

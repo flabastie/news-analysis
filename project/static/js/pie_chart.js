@@ -157,3 +157,35 @@ function change(data) {
 	polyline.exit()
 		.remove();
 };
+
+function drawChart() {
+
+	// get the current width of the div where the chart appear, and attribute it to Svg
+	currentWidth = parseInt(d3.select('.container').style('width'), 10);
+	console.log(currentWidth);
+
+	width = currentWidth;
+	if(currentWidth < 990){
+		height = currentWidth/2;
+	} else {
+		height = 550;
+	}
+	// height = 550;
+    
+	radius = Math.min(width, height) / 2;
+  
+	arc = d3.svg.arc()
+		.outerRadius(radius * 0.8)
+		.innerRadius(radius * 0.4);
+
+	outerArc = d3.svg.arc()
+		.innerRadius(radius * 0.9)
+		.outerRadius(radius * 0.9);
+
+	svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+}
+
+drawChart()
+
+// Add an event listener that run the function when dimension change
+window.addEventListener('resize', drawChart )

@@ -204,14 +204,15 @@ def statistics(id):
         # data for barplot
         tokens_list = res['_source']['doc_token']
         # data
-        counter = Counter()
-        counter.update(tokens_list)
+        counter = Counter(tokens_list)
+        # counter.update(tokens_list)
         most_common = counter.most_common(25)
         df = pd.DataFrame(most_common, columns=['token', 'score'])
         scores = df['score']
         words = df['token']
         scores_list = df.to_dict('records')
         scores_list = sorted(scores_list, key=itemgetter('score')) 
+        print(scores_list)
         return render_template("statistics.html", data=res['_source'], id=id, scores_list=scores_list)
     else:
         return "ERROR"
